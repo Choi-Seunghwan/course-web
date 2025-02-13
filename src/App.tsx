@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import AppRoutes from "./routes/AppRoutes";
 import AppHeader from "./components/layouts/AppHeader";
+import AppProviders from "./providers/AppProviders";
 
 const AppContainer = styled.div`
   min-height: 100%;
@@ -10,10 +11,12 @@ const AppContainer = styled.div`
 
 function App() {
   return (
-    <AppContainer>
-      <AppHeader />
-      <AppRoutes />
-    </AppContainer>
+    <AppProviders>
+      <AppContainer>
+        <AppHeader />
+        <AppRoutes />
+      </AppContainer>
+    </AppProviders>
   );
 }
 
