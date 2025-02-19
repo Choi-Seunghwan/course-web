@@ -1,13 +1,15 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Main from "../pages/Main";
-import Auth from "../pages/Auth";
+import Login from "../pages/Login";
+import SignUp from "../pages/SignUp";
 
 const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Main />} />
-      <Route path="/auth" element={<Auth />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/sign-up" element={<SignUp />} />
     </Routes>
   );
 };

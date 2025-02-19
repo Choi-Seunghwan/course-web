@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const AppHeaderContainer = styled.div`
   display: flex;
@@ -16,6 +17,7 @@ const Logo = styled.h1`
   font-weight: 700;
   color: #333;
   margin: 0;
+  cursor: pointer;
 `;
 
 const AuthButton = styled.button`
@@ -31,15 +33,22 @@ const AuthButton = styled.button`
 `;
 
 export default function AppHeader() {
-  const { isAuthenticated, account, login, logout } = useAuth();
+  const { isAuthenticated, account, logout } = useAuth();
 
-  const handleLogin = () => {
-    login({ name: "john_doe", email: "temp@temp.com", id: 1 });
+  const navigate = useNavigate();
+
+  const handleLogoClick = () => {
+    navigate("/");
+  };
+
+  const handleLoginButton = () => {
+    navigate("/login");
+    // login({ name: "john_doe", email: "temp@temp.com", id: 1 });
   };
 
   return (
     <AppHeaderContainer>
-      <Logo>MyShop</Logo>
+      <Logo onClick={handleLogoClick}>MyShop</Logo>
       {isAuthenticated ? (
         <div>
           <span>👤 {account?.name}</span>
@@ -48,7 +57,7 @@ export default function AppHeader() {
           </AuthButton>
         </div>
       ) : (
-        <AuthButton onClick={handleLogin}>로그인 / 회원가입</AuthButton>
+        <AuthButton onClick={handleLoginButton}>로그인 / 회원가입</AuthButton>
       )}
     </AppHeaderContainer>
   );

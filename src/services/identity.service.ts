@@ -11,4 +11,5 @@ export const portoneIdentityVerification = async () => {
   });
 
   console.log("본인인증 결과:", result);
+  return result;
 };
