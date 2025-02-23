@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useAuth } from "../../context/AuthContext";
+import { useAuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 const AppHeaderContainer = styled.div`
@@ -33,7 +33,7 @@ const AuthButton = styled.button`
 `;
 
 export default function AppHeader() {
-  const { isAuthenticated, account, logout } = useAuth();
+  const { isAuthenticated, account, logout } = useAuthContext();
 
   const navigate = useNavigate();
 
@@ -43,7 +43,6 @@ export default function AppHeader() {
 
   const handleLoginButton = () => {
     navigate("/login");
-    // login({ name: "john_doe", email: "temp@temp.com", id: 1 });
   };
 
   return (

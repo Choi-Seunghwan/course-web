@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Button, Step, StepLabel, Stepper } from "@mui/material";
+import { useAuth } from "../hooks/useAuth";
 
 const Container = styled.div`
   position: relative;
@@ -25,12 +26,27 @@ const SignUpWrap = styled.div`
   width: 100%;
 `;
 
+const Step1Div = styled.div``;
+
+const Step2Div = styled.div``;
+
+const Step3Div = styled.div``;
+
 export default function SignUp() {
   /** stepper */
   const steps = ["본인인증", "정보입력", "완료"];
   const [step, setStep] = React.useState(0);
+  const { identityVerification, signUp: authSignUp } = useAuth();
 
-  const handleVerification = () => {};
+  const handleVerification = async () => {
+    await identityVerification();
+    setStep(1);
+  };
+
+  const handleSignUp = async () => {
+    await authSignUp();
+    setStep(2);
+  };
 
   return (
     <Container>
@@ -45,15 +61,28 @@ export default function SignUp() {
       </StepWrap>
 
       <SignUpWrap>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => {
-            handleVerification();
-          }}
-        >
-          본인인증 하기
-        </Button>
+        <Step1Div>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              handleVerification();
+            }}
+          >
+            본인인증 하기
+          </Button>
+        </Step1Div>
+        <Step2Div>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              handleSignUp();
+            }}
+          >
+            완료
+          </Button>
+        </Step2Div>
       </SignUpWrap>
     </Container>
   );
