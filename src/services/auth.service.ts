@@ -11,7 +11,7 @@ export const apiInstance = axios.create({
 });
 
 export const postSignUp = async (data: SignUpDto) => {
-  return await apiInstance.post("/accounts/signup", data);
+  return await apiInstance.post("/account/sign-up", data);
 };
 
 export const portoneIdentityVerification =
