@@ -35,10 +35,10 @@ export const useAuth = () => {
     try {
       const response = await postSignUp({
         ...signUpData,
-        verification: verificationData,
+        identityVerificationId: verificationData.identityVerificationId,
       });
 
-      login(response.data.account);
+      // login(response.data.account);
       return response.data;
     } catch (err: any) {
       throw err;
