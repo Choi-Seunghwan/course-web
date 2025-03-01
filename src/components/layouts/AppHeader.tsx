@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useAuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 
 const AppHeaderContainer = styled.div`
   display: flex;
@@ -33,7 +34,8 @@ const AuthButton = styled.button`
 `;
 
 export default function AppHeader() {
-  const { isAuthenticated, account, logout } = useAuthContext();
+  const { isAuthenticated, account } = useAuthContext();
+  const { logout } = useAuth();
 
   const navigate = useNavigate();
 
@@ -41,8 +43,8 @@ export default function AppHeader() {
     navigate("/");
   };
 
-  const handleLoginButton = () => {
-    navigate("/login");
+  const handleSignInButton = () => {
+    navigate("/signIn");
   };
 
   return (
@@ -50,13 +52,13 @@ export default function AppHeader() {
       <Logo onClick={handleLogoClick}>MyShop</Logo>
       {isAuthenticated ? (
         <div>
-          <span>👤 {account?.name}</span>
+          <span>👤 {account?.loginId}</span>
           <AuthButton onClick={logout} style={{ marginLeft: "10px" }}>
             로그아웃
           </AuthButton>
         </div>
       ) : (
-        <AuthButton onClick={handleLoginButton}>로그인 / 회원가입</AuthButton>
+        <AuthButton onClick={handleSignInButton}>로그인 / 회원가입</AuthButton>
       )}
     </AppHeaderContainer>
   );

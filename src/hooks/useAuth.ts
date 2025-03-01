@@ -1,17 +1,22 @@
 import { useState } from "react";
 
 import {
-  postSignUp,
-  // postLogin,
-  // postLogout,
   portoneIdentityVerification,
+  postSignIn,
+  postSignUp,
 } from "../services/auth.service";
 import { useAuthContext } from "../context/AuthContext";
 import { IdentityVerificationResponse } from "@portone/browser-sdk/v2";
-import { SignUpData } from "../types/auth.type";
+import { SignInData, SignUpData } from "../types/auth.type";
 
 export const useAuth = () => {
-  const { isAuthenticated, account, login, logout } = useAuthContext();
+  const {
+    isAuthenticated,
+    account,
+    setAccessToken,
+    setAccount,
+    logout: authContextLogout,
+  } = useAuthContext();
   const [verificationData, setVerificationData] =
     useState<IdentityVerificationResponse | null>(null);
 
@@ -38,43 +43,25 @@ export const useAuth = () => {
         identityVerificationId: verificationData.identityVerificationId,
       });
 
-      // login(response.data.account);
       return response.data;
     } catch (err: any) {
       throw err;
     }
   };
 
-  // const handleLogin = async (loginData: any) => {
-  //   setLoading(true);
-  //   setError(null);
+  const signIn = async (signInData: SignInData) => {
+    try {
+      const resData = await postSignIn(signInData);
+      setAccessToken(resData.accessToken);
+      setAccount(resData.account);
+    } catch (err: any) {
+      throw err;
+    }
+  };
 
-  //   try {
-  //     const response = await postLogin(loginData);
-  //     login(response.data.account); //  Context 업데이트
-  //     return response.data;
-  //   } catch (err: any) {
-  //     setError(err.message);
-  //     throw err;
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-  // const handleLogout = async () => {
-  //   setLoading(true);
-  //   setError(null);
-
-  //   try {
-  //     await postLogout();
-  //     logout(); //  Context 업데이트
-  //   } catch (err: any) {
-  //     setError(err.message);
-  //     throw err;
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+  const logout = () => {
+    authContextLogout();
+  };
 
   return {
     isAuthenticated,
@@ -82,7 +69,7 @@ export const useAuth = () => {
     verificationData,
     identityVerification,
     signUp,
-    // handleLogin,
-    // handleLogout,
+    signIn,
+    logout,
   };
 };

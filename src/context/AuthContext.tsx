@@ -1,22 +1,25 @@
 import React, { createContext, useContext, useReducer, ReactNode } from "react";
-
-type Account = {
-  id: number;
-  email: string;
-  name: string;
-};
+import { AccountModel } from "../types/auth.type";
 
 const initialState = {
   isAuthenticated: false,
   account: null,
+  accessToken: null,
 };
 
 function authReducer(state: any, action: any) {
   switch (action.type) {
-    case "LOGIN":
+    case "SET_ACCESS_TOKEN":
+      return { ...state, accessToken: action.payload };
+    case "SET_ACCOUNT":
       return { ...state, isAuthenticated: true, account: action.payload };
     case "LOGOUT":
-      return { ...state, isAuthenticated: false, account: null };
+      return {
+        ...state,
+        isAuthenticated: false,
+        account: null,
+        accessToken: null,
+      };
     default:
       return state;
   }
@@ -24,8 +27,10 @@ function authReducer(state: any, action: any) {
 
 type AuthContextType = {
   isAuthenticated: boolean;
-  account: Account | null;
-  login: (account: Account) => void;
+  setAccessToken: (accessToken: string) => void;
+  accessToken: string | null;
+  account: AccountModel | null;
+  setAccount: (account: AccountModel) => void;
   logout: () => void;
 };
 
@@ -34,12 +39,16 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
-  const login = (account: Account) =>
-    dispatch({ type: "LOGIN", payload: account });
+  const setAccount = (account: AccountModel) =>
+    dispatch({ type: "SET_ACCOUNT", payload: account });
+  const setAccessToken = (accessToken: string) =>
+    dispatch({ type: "SET_ACCESS_TOKEN", payload: accessToken });
   const logout = () => dispatch({ type: "LOGOUT" });
 
   return (
-    <AuthContext.Provider value={{ ...state, login, logout }}>
+    <AuthContext.Provider
+      value={{ ...state, setAccount, logout, setAccessToken }}
+    >
       {children}
     </AuthContext.Provider>
   );

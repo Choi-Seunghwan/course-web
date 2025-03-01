@@ -1,7 +1,12 @@
 import axios from "axios";
 import PortOne, { IdentityVerificationResponse } from "@portone/browser-sdk/v2";
 import { nanoid } from "nanoid";
-import { SignUpDto } from "../types/auth.type";
+import {
+  AccountModel,
+  SignInData,
+  SignInResponse,
+  SignUpDto,
+} from "../types/auth.type";
 
 export const apiInstance = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
@@ -11,7 +16,25 @@ export const apiInstance = axios.create({
 });
 
 export const postSignUp = async (data: SignUpDto) => {
-  return await apiInstance.post("/account/sign-up", data);
+  return await apiInstance
+    .post("/account/sign-up", data)
+    .then((res) => res.data);
+};
+
+export const postSignIn = async (data: SignInData): Promise<SignInResponse> => {
+  return await apiInstance
+    .post("/account/sign-in", data)
+    .then((res) => res.data);
+};
+
+export const getMe = async (): Promise<AccountModel> => {
+  return await apiInstance
+    .get("/account/me", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    })
+    .then((res) => res.data);
 };
 
 export const portoneIdentityVerification =
