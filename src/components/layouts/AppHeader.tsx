@@ -7,18 +7,19 @@ const AppHeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-direction: column;
+  height: 60px;
   padding: 10px;
   background-color: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  height: 60px;
 `;
 
 const Logo = styled.h1`
-  font-size: 25px;
+  font-size: 26px;
   font-weight: 700;
   color: #333;
   margin: 0;
   cursor: pointer;
+  line-height: 23px;
 `;
 
 const AuthButton = styled.button`
@@ -31,6 +32,12 @@ const AuthButton = styled.button`
   &:hover {
     background-color: #2563eb;
   }
+`;
+
+const LogoWrap = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export default function AppHeader() {
@@ -47,19 +54,35 @@ export default function AppHeader() {
     navigate("/signIn");
   };
 
+  const authenticatedPart = () => {
+    return (
+      <div>
+        <AuthButton onClick={logout} style={{ marginLeft: "10px" }}>
+          로그아웃
+        </AuthButton>
+      </div>
+    );
+  };
+
   return (
     <AppHeaderContainer>
-      <Logo onClick={handleLogoClick}>MyShop</Logo>
       {isAuthenticated ? (
         <div>
-          <span>👤 {account?.loginId}</span>
-          <AuthButton onClick={logout} style={{ marginLeft: "10px" }}>
+          {/* <AuthButton onClick={logout} style={{ marginLeft: "10px" }}>
             로그아웃
-          </AuthButton>
+          </AuthButton> */}
         </div>
       ) : (
-        <AuthButton onClick={handleSignInButton}>로그인 / 회원가입</AuthButton>
+        <div></div>
+        // <AuthButton onClick={handleSignInButton}>로그인 / 회원가입</AuthButton>
       )}
+      <LogoWrap>
+        <Logo onClick={handleLogoClick} className="oswald">
+          Luxury
+          <br />
+          Fashion
+        </Logo>
+      </LogoWrap>
     </AppHeaderContainer>
   );
 }
