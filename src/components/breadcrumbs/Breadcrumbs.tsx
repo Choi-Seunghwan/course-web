@@ -5,9 +5,13 @@ export default function Breadcrumbs(props: {
   items: { name: string; path: string }[];
 }) {
   return (
-    <MuiBreadcrumbs>
+    <MuiBreadcrumbs separator="" aria-label="breadcrumb">
       {props.items.map((item, index) => {
-        return <span key={index}>{item.name}</span>;
+        return (
+          <p className="tenor-sans-regular" key={index}>
+            {item.name}
+          </p>
+        );
       })}
     </MuiBreadcrumbs>
   );
