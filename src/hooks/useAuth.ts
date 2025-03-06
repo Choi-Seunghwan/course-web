@@ -4,7 +4,7 @@ import {
   portoneIdentityVerification,
   postSignIn,
   postSignUp,
-} from "../services/auth.service";
+} from "../services/account.service";
 import { useAuthContext } from "../context/AuthContext";
 import { IdentityVerificationResponse } from "@portone/browser-sdk/v2";
 import { SignInData, SignUpData } from "../types/auth.type";

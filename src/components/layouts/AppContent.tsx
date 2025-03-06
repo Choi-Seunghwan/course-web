@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 const AppContentWrap = styled.div`
   position: relative;
-  height: calc(100% - 60px);
   background-color: #fff;
 `;
 
