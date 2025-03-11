@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import tempImage from "../../assets/temp-image.png";
 import { formatKrw } from "../../utils/format";
+import { ProductModel } from "../../types/commerce.type";
 
 const Container = styled.div`
   display: flex;
@@ -23,18 +24,20 @@ const PriceText = styled.div`
   color: #333;
 `;
 
-export type ProductCardProps = {
+export type ProductCardProps = ProductModel & {
   width?: number;
   height?: number;
-  name: string;
-  price: number;
-  imageUrl?: string;
+  onClick?: () => any;
 };
 
 export default function ProductCard(props: ProductCardProps) {
+  const handleClick = () => {
+    props.onClick && props.onClick();
+  };
+
   return (
-    <Container>
-      <img src={tempImage}></img>
+    <Container onClick={handleClick}>
+      <img src={props.images?.[0] || tempImage}></img>
       <div
         style={{
           display: "flex",

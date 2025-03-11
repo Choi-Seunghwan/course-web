@@ -24,7 +24,7 @@ const MobileMode = styled.div`
 function App() {
   return (
     <AppProviders>
-      <AppContainer>
+      <AppContainer id="app-container">
         <MobileMode>
           <AppHeader />
           <AppContent>

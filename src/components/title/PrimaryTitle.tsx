@@ -15,10 +15,10 @@ const Title = styled.h1`
   color: #333;
 `;
 
-export default function PrimaryTitle(props: { str: string }) {
+export default function PrimaryTitle(props: { title: string; size?: number }) {
   return (
     <TitleWrap>
-      <Title>{props.str}</Title>
+      <Title style={{ fontSize: props.size || 24 }}>{props.title}</Title>
       <Divider style={{ width: "40%", margin: "-10px 0 0 0" }} />
     </TitleWrap>
   );

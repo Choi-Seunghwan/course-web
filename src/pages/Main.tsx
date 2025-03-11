@@ -3,8 +3,11 @@ import MainBanner from "../components/banner/MainBanner";
 import CategoryTabs from "../components/tab/CategoryTabs";
 import PrimaryTitle from "../components/title/PrimaryTitle";
 
-import { ProductCardProps } from "../components/card/ProductCard";
 import ProductCardList from "../components/card/ProductCardList";
+import { useCommerce } from "../hooks/useCommerce";
+import { ProductModel } from "../types/commerce.type";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const NewArrivalWrap = styled.div`
   position: relative;
@@ -28,30 +31,27 @@ const ProductCardListContainer = styled.div`
   margin: 20px 20px;
 `;
 
-const items: ProductCardProps[] = [
-  {
-    name: "hihihi",
-    price: 3000,
-  },
-  {
-    name: "hihihi",
-    price: 3000,
-  },
-  {
-    name: "hihihi",
-    price: 3000,
-  },
-];
-
 export default function Main() {
+  const { getProducts } = useCommerce();
+  const [products, setProducts] = useState<ProductModel[]>([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    getProducts({ page: 1, size: 6 }).then((res) => setProducts(res.items));
+  }, []);
+
+  const handleCardClick = (id: number) => {
+    navigate(`/product-detail?productId=${id}`);
+  };
+
   return (
     <Container>
       <MainBanner />
       <NewArrivalWrap>
-        <PrimaryTitle str="NEW ARRIVAL" />
+        <PrimaryTitle title="NEW ARRIVAL" />
         <CategoryTabs />
         <ProductCardListContainer>
-          <ProductCardList items={items}></ProductCardList>
+          <ProductCardList items={products} onCardClick={handleCardClick} />
         </ProductCardListContainer>
       </NewArrivalWrap>
     </Container>
