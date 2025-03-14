@@ -9,6 +9,7 @@ import { formatKrw } from "../utils/format";
 import PrimaryTitle from "../components/title/PrimaryTitle";
 import ProductCardList from "../components/card/ProductCardList";
 import { scrollTop } from "../utils/scroll";
+import FullWidthButton from "../components/button/FullWidthButton";
 
 const ProductDetailWrap = styled.div`
   display: flex;
@@ -35,7 +36,16 @@ const NameText = styled.p``;
 const PriceText = styled.p`
   margin: 0;
   padding: 0;
-  font-size: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #333;
+`;
+
+const DescriptionText = styled.div`
+  margin-top: 20px;
+  padding: 0;
+  font-size: 13px;
+  line-height: 26px;
   font-weight: 700;
   color: #333;
 `;
@@ -46,11 +56,16 @@ const RelatedProductsWrap = styled.div`
   justify-contents: center;
   gap: 20px;
   margin-top: 50px;
+  margin-bottom: 30px;
 `;
 
 const PurchaseWrap = styled.div`
   display: flex;
   flex-direction: row;
+  gap: 16px;
+  margin: 20px 0;
+  width: 100%;
+  height: 50px;
 `;
 
 export default function ProductDetail() {
@@ -104,10 +119,16 @@ export default function ProductDetail() {
         <div style={{ display: "flex", flexDirection: "column" }}>
           <NameText>{product?.name}</NameText>
           <PriceText>{formatKrw(Number(product?.price))}</PriceText>
+          <PurchaseWrap>
+            <FullWidthButton
+              label="ADD TO CART"
+              onClick={() => {}}
+            ></FullWidthButton>
+            <FullWidthButton label="BUY" onClick={() => {}}></FullWidthButton>
+          </PurchaseWrap>
+          <DescriptionText>{product?.description}</DescriptionText>
         </div>
       </ProductInfoWrap>
-
-      <PurchaseWrap></PurchaseWrap>
 
       <RelatedProductsWrap>
         <PrimaryTitle title="You may also like" size={18}></PrimaryTitle>

@@ -15,6 +15,7 @@ export type ProductModel = {
   name: string;
   price: number;
   images: string[];
+  description?: string;
 
   category?: null;
 
