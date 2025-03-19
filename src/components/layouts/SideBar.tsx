@@ -7,10 +7,10 @@ interface SidebarProps {
 }
 
 const SidebarContainer = styled.div<{ isOpen: boolean }>`
-  position: absolute; /* ✅ 부모인 MobileMode 내부에서 동작하도록 변경 */
+  position: absolute;
   top: 0;
-  left: ${({ isOpen }) => (isOpen ? "0" : "-100%")}; /* 사이드바 토글 */
-  width: 100%; /* ✅ 모바일 너비에 맞게 100% */
+  left: ${({ isOpen }) => (isOpen ? "0" : "-100%")};
+  width: 100%;
   height: 100%;
   background-color: #222;
   color: white;

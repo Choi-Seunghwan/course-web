@@ -14,7 +14,7 @@ import FullWidthButton from "../components/button/FullWidthButton";
 const ProductDetailWrap = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 0 20px;
+  margin: 0 10px;
 `;
 
 const ImageWrap = styled.div`
@@ -124,7 +124,10 @@ export default function ProductDetail() {
               label="ADD TO CART"
               onClick={() => {}}
             ></FullWidthButton>
-            <FullWidthButton label="BUY" onClick={() => {}}></FullWidthButton>
+            <FullWidthButton
+              label="BUY NOW"
+              onClick={() => {}}
+            ></FullWidthButton>
           </PurchaseWrap>
           <DescriptionText>{product?.description}</DescriptionText>
         </div>

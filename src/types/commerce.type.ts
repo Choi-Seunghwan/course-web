@@ -1,14 +1,4 @@
-export type GetProductResponse = {
-  id: number;
-  name: string;
-  price: number;
-  images: string[];
-
-  category?: null; // TODO CategoryResponse
-
-  createdAt: Date;
-  updatedAt?: Date;
-};
+export type GetProductResponse = ProductModel;
 
 export type ProductModel = {
   id: number;
@@ -21,4 +11,17 @@ export type ProductModel = {
 
   createdAt: Date;
   updatedAt?: Date;
+};
+
+export type CartModel = {
+  id: number;
+  productId: number;
+  name: string;
+  price: number;
+  quantity: number;
+  product?: ProductModel;
+};
+
+export type GetCartResponse = Omit<CartModel, "product"> & {
+  product?: ProductModel;
 };

@@ -30,12 +30,11 @@ const LogoWrap = styled.div`
   margin: 0 auto;
 `;
 
-const LoginText = styled.p`
+const AuthText = styled.p`
   font-size: 16px;
   font-weight: 500;
   color: #555;
   margin: 0;
-  text-decoration: underline;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -47,12 +46,24 @@ const CartIcon = styled.img`
 `;
 
 export default function AppHeader() {
-  const { isAuthenticated } = useAuthContext();
+  const { isAuthenticated, account } = useAuthContext();
   const { logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogoClick = () => {
     navigate("/");
+  };
+
+  const handleCartClick = () => {
+    navigate("/cart");
+  };
+
+  const renderAuth = () => {
+    if (isAuthenticated) {
+      return <AuthText onClick={logout}>LOGOUT</AuthText>;
+    } else {
+      return <AuthText onClick={() => navigate("/signin")}>LOGIN</AuthText>;
+    }
   };
 
   return (
@@ -61,15 +72,10 @@ export default function AppHeader() {
         style={{
           display: "flex",
           alignItems: "center",
-          width: "80px",
-          textOverflow: "ellipsis  ",
+          width: "120px",
         }}
       >
-        <LoginText
-          onClick={isAuthenticated ? logout : () => navigate("/signin")}
-        >
-          LOGIN
-        </LoginText>
+        {renderAuth()}
       </div>
       <LogoWrap>
         <Logo onClick={handleLogoClick} className="oswald">
@@ -78,8 +84,13 @@ export default function AppHeader() {
           Fashion
         </Logo>
       </LogoWrap>
-      <div style={{ display: "flex", alignItems: "center", width: "80px" }}>
-        <CartIcon style={{ marginLeft: "auto" }} src={cartIcon} />
+      <div style={{ display: "flex", alignItems: "center", width: "120px" }}>
+        <AuthText style={{ marginRight: "10px" }}>{account?.loginId}</AuthText>
+        <CartIcon
+          style={{ marginLeft: "auto" }}
+          src={cartIcon}
+          onClick={handleCartClick}
+        />
       </div>
     </AppHeaderContainer>
   );
