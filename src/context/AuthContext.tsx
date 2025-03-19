@@ -1,5 +1,12 @@
-import React, { createContext, useContext, useReducer, ReactNode } from "react";
+import React, {
+  createContext,
+  useContext,
+  useReducer,
+  ReactNode,
+  useEffect,
+} from "react";
 import { AccountModel } from "../types/auth.type";
+import { getMe } from "../services/account.service";
 
 const initialState = {
   isAuthenticated: false,
@@ -44,6 +51,25 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const setAccessToken = (accessToken: string) =>
     dispatch({ type: "SET_ACCESS_TOKEN", payload: accessToken });
   const logout = () => dispatch({ type: "LOGOUT" });
+
+  /** Load User */
+  useEffect(() => {
+    const initAuth = async () => {
+      const token = localStorage.getItem("accessToken");
+      if (token) {
+        dispatch({ type: "SET_ACCESS_TOKEN", payload: token });
+        try {
+          const account = await getMe();
+
+          dispatch({ type: "SET_ACCOUNT", payload: account });
+        } catch (err) {
+          logout();
+        }
+      }
+    };
+
+    initAuth();
+  }, []);
 
   return (
     <AuthContext.Provider
