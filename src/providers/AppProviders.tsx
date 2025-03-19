@@ -1,15 +1,18 @@
 import React from "react";
 import { AuthProvider } from "../context/AuthContext";
+import { CartProvider } from "../context/CartContext";
+import { AppInitializer } from "../context/AppInitializer";
 
-const AppProviders = ({ children }: { children: React.ReactNode }) => {
+export default function AppProviders({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <AuthProvider>
-      {/* <ProductProvider>
-        <CartProvider>{children}</CartProvider>
-      </ProductProvider> */}
-      {children}
+      <CartProvider>
+        <AppInitializer>{children}</AppInitializer>
+      </CartProvider>
     </AuthProvider>
   );
-};
-
-export default AppProviders;
+}

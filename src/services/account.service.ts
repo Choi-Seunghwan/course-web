@@ -7,13 +7,17 @@ import {
   SignInResponse,
   SignUpDto,
 } from "../types/auth.type";
+import { setUpInterceptors } from "./api.interceptor";
 
 export const apiInstance = axios.create({
   baseURL: process.env.REACT_APP_ACCOUNT_SERVICE_URL,
+  withCredentials: true,
   headers: {
     "Content-Type": "application/json",
   },
 });
+
+setUpInterceptors(apiInstance);
 
 export const postSignUp = async (data: SignUpDto) => {
   return await apiInstance

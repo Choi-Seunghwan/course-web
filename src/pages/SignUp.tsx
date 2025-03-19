@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
-import { Button, Step, StepLabel, Stepper, TextField } from "@mui/material";
+import { Button, Input, Step, StepLabel, Stepper } from "@mui/material";
 import { useAuth } from "../hooks/useAuth";
 
 export type SignUpData = {
@@ -15,7 +15,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100%;
+  height: calc(100vh - 185px);
 `;
 
 const SignUpWrap = styled.div`
@@ -36,6 +36,20 @@ const SignUpForm = styled.form`
   max-width: 400px;
 `;
 
+// ✅ Stepper의 active 색상을 검정으로 변경
+const CustomStepper = styled(Stepper)({
+  margin: "30px auto auto auto",
+  "& .MuiStepIcon-root": {
+    color: "#ddd",
+  },
+  "& .MuiStepIcon-root.Mui-active": {
+    color: "#000",
+  },
+  "& .MuiStepIcon-root.Mui-completed": {
+    color: "#000",
+  },
+});
+
 export default function SignUp() {
   const steps = ["본인인증", "정보입력", "완료"];
   const [step, setStep] = React.useState(0);
@@ -53,8 +67,8 @@ export default function SignUp() {
   };
 
   const handleSignUp = async (data: SignUpData) => {
-    console.log("회원가입 데이터:", data);
     await authSignUp(data);
+
     setStep(2);
   };
 
@@ -64,39 +78,44 @@ export default function SignUp() {
         return (
           <Button
             variant="contained"
-            color="primary"
             onClick={handleVerification}
+            style={{ backgroundColor: "#000" }}
           >
             본인인증 하기
           </Button>
         );
       case 1:
         return (
-          <SignUpForm onSubmit={handleSubmit(handleSignUp)}>
-            <TextField
-              label="아이디"
-              variant="outlined"
-              fullWidth
+          <SignUpForm
+            onSubmit={handleSubmit(handleSignUp)}
+            style={{
+              width: "80%",
+            }}
+          >
+            <Input
+              placeholder="아이디"
               {...register("loginId", { required: "아이디를 입력하세요." })}
               error={!!errors.loginId}
-              helperText={errors.loginId?.message}
+              style={{ color: "#000" }}
             />
-            <TextField
-              label="이메일"
-              variant="outlined"
-              fullWidth
+            <Input
+              placeholder="이메일"
               {...register("email")}
+              style={{ color: "#000" }}
             />
-            <TextField
-              label="비밀번호"
+            <Input
+              placeholder="비밀번호"
               type="password"
-              variant="outlined"
-              fullWidth
               {...register("password", { required: "비밀번호를 입력하세요." })}
               error={!!errors.password}
-              helperText={errors.password?.message}
+              style={{ color: "#000" }}
             />
-            <Button type="submit" variant="contained" color="primary">
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              style={{ backgroundColor: "#000" }}
+            >
               완료
             </Button>
           </SignUpForm>
@@ -110,13 +129,17 @@ export default function SignUp() {
 
   return (
     <Container>
-      <Stepper style={{ width: "100%" }} activeStep={step} alternativeLabel>
+      <CustomStepper
+        style={{ width: "100%" }}
+        activeStep={step}
+        alternativeLabel
+      >
         {steps.map((label) => (
           <Step key={label}>
             <StepLabel>{label}</StepLabel>
           </Step>
         ))}
-      </Stepper>
+      </CustomStepper>
 
       <SignUpWrap>{renderStepContent()}</SignUpWrap>
     </Container>

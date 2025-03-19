@@ -50,17 +50,27 @@ export default function SignIn() {
           placeholder="아이디"
           value={loginId}
           onChange={(e) => setLoginId(e.target.value)}
+          style={{ color: "#000", width: "90%" }}
         />
         <Input
           type="password"
           placeholder="비밀번호"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          style={{ color: "#000", width: "90%" }}
         />
-        <Button onClick={handleSignInButton} variant="text">
+        <Button
+          onClick={handleSignInButton}
+          variant="text"
+          style={{ color: "#000", width: "90%" }}
+        >
           로그인
         </Button>
-        <Button onClick={handleSignUpButton} variant="text">
+        <Button
+          onClick={handleSignUpButton}
+          variant="text"
+          style={{ color: "#000", width: "90%" }}
+        >
           회원가입
         </Button>
       </SignInWrap>
