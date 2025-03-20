@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import CartCard, { CartCardProps } from "./CartCard";
+import { CartModel } from "../../types/commerce.type";
 
 const CartCardListContainer = styled.div`
   display: flex;
@@ -9,8 +10,8 @@ const CartCardListContainer = styled.div`
 
 export default function CartCardList(props: {
   items: CartCardProps[];
-  onIncrease: (cartId: number) => void;
-  onDecrease: (cartId: number) => void;
+  onIncrease: (cartId: CartModel) => void;
+  onDecrease: (cartId: CartModel) => void;
 }) {
   return (
     <CartCardListContainer>

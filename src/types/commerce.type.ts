@@ -17,7 +17,6 @@ export type CartModel = {
   id: number;
   productId: number;
   name: string;
-  price: number;
   quantity: number;
   product?: ProductModel;
 };

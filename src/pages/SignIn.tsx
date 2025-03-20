@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Button, Input } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import strings from "../strings/string";
 
 const Container = styled.div`
   display: flex;
@@ -34,8 +35,7 @@ export default function SignIn() {
       await signIn({ loginId, password });
       navigate("/");
     } catch (error) {
-      console.error("로그인 실패:", error);
-      alert("로그인에 실패했습니다. 아이디와 비밀번호를 확인하세요.");
+      alert(strings["ko"].LOGIN_FAIL);
     }
   };
 

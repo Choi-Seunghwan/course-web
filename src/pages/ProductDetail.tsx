@@ -10,6 +10,7 @@ import PrimaryTitle from "../components/title/PrimaryTitle";
 import ProductCardList from "../components/card/ProductCardList";
 import { scrollTop } from "../utils/scroll";
 import FullWidthButton from "../components/button/FullWidthButton";
+import strings from "../strings/string";
 
 const ProductDetailWrap = styled.div`
   display: flex;
@@ -70,10 +71,12 @@ const PurchaseWrap = styled.div`
 
 export default function ProductDetail() {
   const location = useLocation();
-  const productId = new URLSearchParams(location.search).get("productId");
+  const productId = Number(
+    new URLSearchParams(location.search).get("productId")
+  );
   const navigate = useNavigate();
 
-  const { getProductDetail, getProducts } = useCommerce();
+  const { getProductDetail, getProducts, addToCart } = useCommerce();
   const [product, setProduct] = useState<ProductModel | null>(null);
   const [relatedProducts, setRelatedProducts] = useState<ProductModel[]>([]);
 
@@ -87,11 +90,17 @@ export default function ProductDetail() {
       return;
     }
 
-    getProductDetail(Number(productId)).then((res) => setProduct(res));
+    getProductDetail(productId).then((res) => setProduct(res));
     getProducts({ page: 1, size: 4 }).then((res) =>
       setRelatedProducts(res.items)
     );
   }, [productId]);
+
+  const handleAddToCartButtonClick = () => {
+    addToCart(productId, 1).then(() => {
+      alert(strings["ko"].ADD_TO_CART);
+    });
+  };
 
   return (
     <ProductDetailWrap>
@@ -122,7 +131,7 @@ export default function ProductDetail() {
           <PurchaseWrap>
             <FullWidthButton
               label="ADD TO CART"
-              onClick={() => {}}
+              onClick={handleAddToCartButtonClick}
             ></FullWidthButton>
             <FullWidthButton
               label="BUY NOW"

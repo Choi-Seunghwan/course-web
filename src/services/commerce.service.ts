@@ -31,6 +31,18 @@ export const getCartItems = async (): Promise<GetCartResponse> => {
   return await apiInstance.get(`/cart`).then((res) => res.data);
 };
 
-export const addToCart = async (productId: number) => {
-  return await apiInstance.post(`/cart`, {}).then((res) => res.data);
+export const addToCart = async (productId: number, quantity: number) => {
+  return await apiInstance
+    .post(`/cart`, { productId, quantity })
+    .then((res) => res.data);
+};
+
+export const updateCartQuantity = async (cartId: number, quantity: number) => {
+  return await apiInstance
+    .patch(`/cart/${cartId}`, { quantity })
+    .then((res) => res.data);
+};
+
+export const removeFromCart = async (cartId: number) => {
+  return await apiInstance.delete(`/cart/${cartId}`).then((res) => res.data);
 };

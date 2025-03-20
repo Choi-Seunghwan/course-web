@@ -11,8 +11,8 @@ const Container = styled.div`
 `;
 
 const Image = styled.img`
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 133px;
   object-fit: cover;
   margin-right: 16px;
 `;
@@ -63,17 +63,17 @@ const QuantityButton = styled.button`
 `;
 
 export type CartCardProps = CartModel & {
-  onIncrease?: (cartId: number) => void;
-  onDecrease?: (cartId: number) => void;
+  onIncrease?: (cartId: CartModel) => void;
+  onDecrease?: (cartId: CartModel) => void;
 };
 
 export default function CartCard(props: CartCardProps) {
   const handleIncrease = () => {
-    props.onIncrease && props.onIncrease(props.id);
+    props.onIncrease && props.onIncrease(props);
   };
 
   const handleDecrease = () => {
-    props.onDecrease && props.onDecrease(props.id);
+    props.onDecrease && props.onDecrease(props);
   };
 
   return (
@@ -82,7 +82,7 @@ export default function CartCard(props: CartCardProps) {
 
       <InfoWrap>
         <NameText>{props.product?.name}</NameText>
-        <DescText>{props.product?.description}</DescText>
+        {/* <DescText>{props.product?.description}</DescText> */}
 
         <QuantityWrap>
           <QuantityButton onClick={handleDecrease}>−</QuantityButton>{" "}
