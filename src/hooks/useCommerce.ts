@@ -10,7 +10,7 @@ import {
 import { PagingQuery } from "../types/api.type";
 
 export const useCommerce = () => {
-  const { setCart, clearCart } = useCartContext();
+  const { setCart } = useCartContext();
 
   const getProducts = async (paging: PagingQuery) => {
     try {

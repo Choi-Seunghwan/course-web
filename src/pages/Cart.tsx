@@ -8,6 +8,8 @@ import { useCommerce } from "../hooks/useCommerce";
 import { CartModel } from "../types/commerce.type";
 import { formatKrw } from "../utils/format";
 import strings from "../strings/string";
+import { useOrderContext } from "../context/OrderContext";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   position: relative;
@@ -16,7 +18,7 @@ const Container = styled.div`
   align-items: center;
   flex-direction: column;
   width: 100%;
-  height: calc(100vh - 185px);
+  min-height: calc(100vh - 185px);
 `;
 
 const TitleWrap = styled.div`
@@ -40,7 +42,7 @@ const CartCardListWrap = styled.div`
 
 const BottomWrap = styled.div`
   width: 100%;
-  height: 200px;
+  height: 110px;
   padding: 10px;
 `;
 
@@ -62,8 +64,11 @@ const TotalText = styled.div`
 
 export default function Cart() {
   const { cart } = useCartContext();
+  const { setOrderItems } = useOrderContext();
 
   const { getCartItems, updateCartQuantity, removeFromCart } = useCommerce();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     getCartItems().then();
@@ -87,6 +92,17 @@ export default function Cart() {
         getCartItems().then();
       });
     }
+  };
+
+  const handleBuyButtonClick = () => {
+    setOrderItems(
+      cart.map((item: CartModel) => ({
+        product: item.product,
+        quantity: item.quantity,
+      }))
+    );
+
+    navigate("/checkout");
   };
 
   return (
@@ -124,7 +140,10 @@ export default function Cart() {
             )}
           </TotalText>
         </TotalWrap>
-        <FullWidthButton label="BUY NOW" onClick={() => {}}></FullWidthButton>
+        <FullWidthButton
+          label="BUY NOW"
+          onClick={handleBuyButtonClick}
+        ></FullWidthButton>
       </BottomWrap>
     </Container>
   );

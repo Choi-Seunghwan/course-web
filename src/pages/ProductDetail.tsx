@@ -11,6 +11,7 @@ import ProductCardList from "../components/card/ProductCardList";
 import { scrollTop } from "../utils/scroll";
 import FullWidthButton from "../components/button/FullWidthButton";
 import strings from "../strings/string";
+import { useOrderContext } from "../context/OrderContext";
 
 const ProductDetailWrap = styled.div`
   display: flex;
@@ -77,6 +78,7 @@ export default function ProductDetail() {
   const navigate = useNavigate();
 
   const { getProductDetail, getProducts, addToCart } = useCommerce();
+  const { setOrderItems } = useOrderContext();
   const [product, setProduct] = useState<ProductModel | null>(null);
   const [relatedProducts, setRelatedProducts] = useState<ProductModel[]>([]);
 
@@ -100,6 +102,12 @@ export default function ProductDetail() {
     addToCart(productId, 1).then(() => {
       alert(strings["ko"].ADD_TO_CART);
     });
+  };
+
+  const handleBuyButtonClick = (product: ProductModel) => {
+    setOrderItems([{ product, quantity: 1 }]);
+
+    navigate("/checkout");
   };
 
   return (
@@ -135,7 +143,7 @@ export default function ProductDetail() {
             ></FullWidthButton>
             <FullWidthButton
               label="BUY NOW"
-              onClick={() => {}}
+              onClick={() => handleBuyButtonClick(product as ProductModel)}
             ></FullWidthButton>
           </PurchaseWrap>
           <DescriptionText>{product?.description}</DescriptionText>

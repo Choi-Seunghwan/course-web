@@ -9,7 +9,7 @@ export type ProductModel = {
 
   category?: null;
 
-  createdAt: Date;
+  createdAt?: Date;
   updatedAt?: Date;
 };
 
@@ -23,4 +23,9 @@ export type CartModel = {
 
 export type GetCartResponse = Omit<CartModel, "product"> & {
   product?: ProductModel;
+};
+
+export type OrderProductModel = {
+  product: ProductModel;
+  quantity: number;
 };
