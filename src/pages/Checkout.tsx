@@ -7,6 +7,8 @@ import PrimaryTitle from "../components/title/PrimaryTitle";
 import { Divider } from "@mui/material";
 import HorizontalProductCardList from "../components/card/HorizontalProductCardList";
 import { OrderProductModel } from "../types/commerce.type";
+import { useCommerce } from "../hooks/useCommerce";
+import { getOrderSummaryText } from "../utils/get-order-summary-text";
 
 const Container = styled.div`
   position: relative;
@@ -48,6 +50,14 @@ const AddressWrap = styled.div`
   margin: 0px;
 `;
 
+const PaymentMethodWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  margin: 0px;
+`;
+
 const BottomWrap = styled.div`
   width: 100%;
   height: 110px;
@@ -73,8 +83,38 @@ const TotalText = styled.div`
 
 export default function Checkout() {
   const { orderItems, clearOrder } = useOrderContext();
+  const { order, pay } = useCommerce();
 
   const navigate = useNavigate();
+
+  const payNowButtonHandler = async () => {
+    const totalPrice = orderItems.reduce(
+      (acc: number, cur: OrderProductModel) =>
+        acc + (cur?.product?.price || 0) * cur.quantity,
+      0
+    );
+
+    const paymentKey = await order({
+      totalPrice,
+      orderProducts: orderItems.map((item: OrderProductModel) => ({
+        productId: item.product.id,
+        quantity: item.quantity,
+      })),
+    });
+
+    await pay({
+      orderName: getOrderSummaryText(
+        orderItems.map((item: OrderProductModel) => item.product.name)
+      ),
+      paymentKey,
+      totalAmount: totalPrice,
+    });
+
+    alert("결제가 완료되었습니다.");
+    navigate("/my");
+  };
+
+  //TODO unmount order 삭제
 
   return (
     <Container>
@@ -95,6 +135,14 @@ export default function Checkout() {
           </p>
           <Divider />
         </AddressWrap>
+        <PaymentMethodWrap>
+          <p
+            style={{ fontSize: "16px", fontWeight: "700", marginBottom: "4px" }}
+          >
+            결제수단
+          </p>
+          <Divider />
+        </PaymentMethodWrap>
         <CardListWrap>
           <HorizontalProductCardList
             items={orderItems}
@@ -118,11 +166,7 @@ export default function Checkout() {
 
         <FullWidthButton
           label="PAY NOW"
-          onClick={() => {
-            // 결제 처리 로직!
-            alert("결제 진행!");
-            clearOrder();
-          }}
+          onClick={payNowButtonHandler}
         ></FullWidthButton>
       </BottomWrap>
     </Container>

@@ -29,3 +29,27 @@ export type OrderProductModel = {
   product: ProductModel;
   quantity: number;
 };
+
+export type RequestPaymentResponse = {
+  paymentKey: string;
+};
+
+export type OrderProductData = {
+  productId: number;
+  quantity: number;
+};
+
+export type OrderData = {
+  orderProducts: OrderProductData[];
+  totalPrice: number;
+};
+
+export type OrderResponse = {
+  status: string;
+  id: number;
+  customerId: number;
+  orderNo: string;
+  totalPrice: number;
+  createdAt: Date;
+  createdById: number;
+};

@@ -1,6 +1,12 @@
 import axios from "axios";
 import { PagingQuery, PagingResponse } from "../types/api.type";
-import { GetCartResponse, GetProductResponse } from "../types/commerce.type";
+import {
+  GetCartResponse,
+  GetProductResponse,
+  OrderData,
+  OrderResponse,
+  RequestPaymentResponse,
+} from "../types/commerce.type";
 import { setUpInterceptors } from "./api.interceptor";
 
 const apiInstance = axios.create({
@@ -45,4 +51,22 @@ export const updateCartQuantity = async (cartId: number, quantity: number) => {
 
 export const removeFromCart = async (cartId: number) => {
   return await apiInstance.delete(`/cart/${cartId}`).then((res) => res.data);
+};
+
+export const order = async (data: OrderData): Promise<OrderResponse> => {
+  return await apiInstance.post("/order", data).then((res) => res.data);
+};
+
+export const requestPayment = async (
+  orderId: number
+): Promise<RequestPaymentResponse> => {
+  return await apiInstance
+    .post("/payment/request", { orderId })
+    .then((res) => res.data);
+};
+
+export const completePayment = async (paymentKey: string) => {
+  return await apiInstance
+    .post("/payment/complete", { paymentKey })
+    .then((res) => res.data);
 };

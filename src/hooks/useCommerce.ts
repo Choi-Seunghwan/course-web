@@ -6,8 +6,13 @@ import {
   addToCart as addToCartApi,
   updateCartQuantity as updateCartQuantityApi,
   removeFromCart as removeFromCartApi,
+  requestPayment,
+  order as orderApi,
+  completePayment,
 } from "../services/commerce.service";
 import { PagingQuery } from "../types/api.type";
+import { OrderData } from "../types/commerce.type";
+import { requestPortOnePayment } from "../utils/request-portone-payment";
 
 export const useCommerce = () => {
   const { setCart } = useCartContext();
@@ -73,6 +78,31 @@ export const useCommerce = () => {
     }
   };
 
+  const order = async (data: OrderData): Promise<string> => {
+    try {
+      const orderRes = await orderApi(data);
+      const requestPaymentRes = await requestPayment(orderRes.id);
+
+      return requestPaymentRes.paymentKey;
+    } catch (e) {
+      throw e;
+    }
+  };
+  const pay = async (data: {
+    orderName: string;
+    paymentKey: string;
+    totalAmount: number;
+  }) => {
+    await requestPortOnePayment({
+      orderName: data.orderName,
+      paymentId: data.paymentKey,
+      totalAmount: data.totalAmount,
+      payMethod: "CARD",
+    });
+
+    await completePayment(data.paymentKey);
+  };
+
   return {
     getProducts,
     getProductDetail,
@@ -80,5 +110,7 @@ export const useCommerce = () => {
     addToCart,
     updateCartQuantity,
     removeFromCart,
+    order,
+    pay,
   };
 };

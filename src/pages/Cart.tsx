@@ -23,7 +23,7 @@ const Container = styled.div`
 
 const TitleWrap = styled.div`
   width: 100%;
-  margin: 10px 0 auto 20px;
+  margin: 10px 0 20px 20px;
 `;
 
 const CartContentWrap = styled.div`
@@ -31,6 +31,7 @@ const CartContentWrap = styled.div`
   height: 80%;
   margin-top: 40px;
   padding: 10px;
+  margin-bottom: auto;
 `;
 
 const CartCardListWrap = styled.div`
