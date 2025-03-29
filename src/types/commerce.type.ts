@@ -1,33 +1,9 @@
+import { CartModel, OrderModel, ProductModel } from "./commerce-model.type";
+
 export type GetProductResponse = ProductModel;
-
-export type ProductModel = {
-  id: number;
-  name: string;
-  price: number;
-  images: string[];
-  description?: string;
-
-  category?: null;
-
-  createdAt?: Date;
-  updatedAt?: Date;
-};
-
-export type CartModel = {
-  id: number;
-  productId: number;
-  name: string;
-  quantity: number;
-  product?: ProductModel;
-};
 
 export type GetCartResponse = Omit<CartModel, "product"> & {
   product?: ProductModel;
-};
-
-export type OrderProductModel = {
-  product: ProductModel;
-  quantity: number;
 };
 
 export type RequestPaymentResponse = {
@@ -35,12 +11,12 @@ export type RequestPaymentResponse = {
 };
 
 export type OrderProductData = {
-  productId: number;
+  product: ProductModel;
   quantity: number;
 };
 
 export type OrderData = {
-  orderProducts: OrderProductData[];
+  orderProducts: ProductModel[];
   totalPrice: number;
 };
 
@@ -53,3 +29,5 @@ export type OrderResponse = {
   createdAt: Date;
   createdById: number;
 };
+
+export type GetOrdersResponse = OrderModel[];

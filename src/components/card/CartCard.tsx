@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import tempImage from "../../assets/temp-image.png";
 import { formatKrw } from "../../utils/format";
-import { CartModel } from "../../types/commerce.type";
+import { CartModel } from "../../types/commerce-model.type";
 
 const Container = styled.div`
   display: flex;

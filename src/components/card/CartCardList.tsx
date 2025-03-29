@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import CartCard, { CartCardProps } from "./CartCard";
-import { CartModel } from "../../types/commerce.type";
+import { CartModel } from "../../types/commerce-model.type";
 
 const CartCardListContainer = styled.div`
   display: flex;

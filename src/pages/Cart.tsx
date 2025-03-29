@@ -5,7 +5,7 @@ import CartCardList from "../components/card/CartCardList";
 import { useCartContext } from "../context/CartContext";
 import { useEffect } from "react";
 import { useCommerce } from "../hooks/useCommerce";
-import { CartModel } from "../types/commerce.type";
+import { CartModel } from "../types/commerce-model.type";
 import { formatKrw } from "../utils/format";
 import strings from "../strings/string";
 import { useOrderContext } from "../context/OrderContext";
@@ -123,8 +123,8 @@ export default function Cart() {
           </CartCardListWrap>
         </CartContentWrap>
       ) : (
-        <CartContentWrap>
-          <p>EMPTY</p>
+        <CartContentWrap style={{ marginTop: "auto" }}>
+          <p style={{ textAlign: "center" }}>{strings.ko.CART_EMPTY}</p>
         </CartContentWrap>
       )}
 

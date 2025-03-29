@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import OrderProductCard from "./HorizontalProductCard";
-import { ProductModel } from "../../types/commerce.type";
+import { ProductModel } from "../../types/commerce-model.type";
 
 const ListContainer = styled.div`
   display: flex;

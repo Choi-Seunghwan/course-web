@@ -5,7 +5,7 @@ import PrimaryTitle from "../components/title/PrimaryTitle";
 
 import ProductCardList from "../components/card/ProductCardList";
 import { useCommerce } from "../hooks/useCommerce";
-import { ProductModel } from "../types/commerce.type";
+import { ProductModel } from "../types/commerce-model.type";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 

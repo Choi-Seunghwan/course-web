@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import PrimaryTitle from "../components/title/PrimaryTitle";
 import { Divider } from "@mui/material";
 import HorizontalProductCardList from "../components/card/HorizontalProductCardList";
-import { OrderProductModel } from "../types/commerce.type";
+import { OrderProductData } from "../types/commerce.type";
 import { useCommerce } from "../hooks/useCommerce";
 import { getOrderSummaryText } from "../utils/get-order-summary-text";
 
@@ -89,14 +89,14 @@ export default function Checkout() {
 
   const payNowButtonHandler = async () => {
     const totalPrice = orderItems.reduce(
-      (acc: number, cur: OrderProductModel) =>
+      (acc: number, cur: OrderProductData) =>
         acc + (cur?.product?.price || 0) * cur.quantity,
       0
     );
 
     const paymentKey = await order({
       totalPrice,
-      orderProducts: orderItems.map((item: OrderProductModel) => ({
+      orderProducts: orderItems.map((item: OrderProductData) => ({
         productId: item.product.id,
         quantity: item.quantity,
       })),
@@ -104,7 +104,7 @@ export default function Checkout() {
 
     await pay({
       orderName: getOrderSummaryText(
-        orderItems.map((item: OrderProductModel) => item.product.name)
+        orderItems.map((item: OrderProductData) => item.product.name)
       ),
       paymentKey,
       totalAmount: totalPrice,
@@ -156,7 +156,7 @@ export default function Checkout() {
           <TotalText>
             {formatKrw(
               orderItems.reduce(
-                (acc: number, cur: OrderProductModel) =>
+                (acc: number, cur: OrderProductData) =>
                   acc + (cur?.product?.price || 0) * cur.quantity,
                 0
               )

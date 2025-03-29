@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useReducer, ReactNode } from "react";
-import { ProductModel } from "../types/commerce.type";
+import { ProductModel } from "../types/commerce-model.type";
 
 type OrderState = {
   orderItems: ProductModel[];

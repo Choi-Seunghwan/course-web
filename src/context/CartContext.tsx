@@ -1,5 +1,5 @@
 import { createContext, useContext, useReducer, ReactNode } from "react";
-import { CartModel } from "../types/commerce.type";
+import { CartModel } from "../types/commerce-model.type";
 
 const initialState = {
   cart: [],

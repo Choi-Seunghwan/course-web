@@ -1,9 +1,8 @@
 import styled from "styled-components";
 import tempDetailImage from "../assets/temp-detail-image.png";
-import Carousel from "react-material-ui-carousel";
 import { useCommerce } from "../hooks/useCommerce";
 import { useEffect, useState } from "react";
-import { ProductModel } from "../types/commerce.type";
+
 import { useLocation, useNavigate } from "react-router-dom";
 import { formatKrw } from "../utils/format";
 import PrimaryTitle from "../components/title/PrimaryTitle";
@@ -12,6 +11,7 @@ import { scrollTop } from "../utils/scroll";
 import FullWidthButton from "../components/button/FullWidthButton";
 import strings from "../strings/string";
 import { useOrderContext } from "../context/OrderContext";
+import { ProductModel } from "../types/commerce-model.type";
 
 const ProductDetailWrap = styled.div`
   display: flex;
