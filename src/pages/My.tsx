@@ -70,11 +70,14 @@ export default function My() {
   return (
     <Container>
       <TitleWrap>
-        <SecondaryTitle title="Info"></SecondaryTitle>
+        <SecondaryTitle
+          style={{ marginBottom: "0px" }}
+          title="Info"
+        ></SecondaryTitle>
       </TitleWrap>
       <ContentWrap>
         <div style={{ marginBottom: "20px" }}>
-          <SecondaryTitle title="회원정보" />
+          <SecondaryTitle style={{ marginTop: "0px" }} title="회원정보" />
           <p>ID: {account?.loginId}</p>
           <p>EMAIL: {account?.email}</p>
           <Divider />
