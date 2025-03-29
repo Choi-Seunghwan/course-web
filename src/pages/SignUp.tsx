@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { Button, Input, Step, StepLabel, Stepper } from "@mui/material";
 import { useAuth } from "../hooks/useAuth";
+import strings from "../strings/string";
 
 export type SignUpData = {
   loginId: string;
@@ -53,7 +54,11 @@ const CustomStepper = styled(Stepper)({
 export default function SignUp() {
   const steps = ["본인인증", "정보입력", "완료"];
   const [step, setStep] = React.useState(0);
-  const { identityVerification, signUp: authSignUp } = useAuth();
+  const {
+    identityVerification,
+    signUp: authSignUp,
+    checkDuplicateVerification,
+  } = useAuth();
 
   const {
     register,
@@ -62,12 +67,41 @@ export default function SignUp() {
   } = useForm<SignUpData>();
 
   const handleVerification = async () => {
-    await identityVerification();
+    let result;
+
+    try {
+      result = await identityVerification();
+    } catch (e) {
+      alert(strings.ko.FAIL_VERIFICATION);
+      return;
+    }
+
+    try {
+      const isDuplicated = await checkDuplicateVerification(
+        result.identityVerificationId
+      );
+      if (isDuplicated) {
+        alert(strings.ko.ACCOUNT_INFO_EXIST);
+        return;
+      }
+    } catch (e) {
+      alert(strings.ko.FAIL_VERIFICATION);
+      return;
+    }
+
     setStep(1);
   };
 
   const handleSignUp = async (data: SignUpData) => {
-    await authSignUp(data);
+    try {
+      await authSignUp(data);
+    } catch (e) {
+      console.log(e);
+
+      // TODO : Error Code Case 별 핸들링
+      alert(strings.ko.FAIL_SIGN_UP);
+      return;
+    }
 
     setStep(2);
   };

@@ -11,6 +11,10 @@ export type SignUpDto = {
   identityVerificationId: string;
 };
 
+export type checkDuplicateVerificationDto = {
+  identityVerificationId: string;
+};
+
 export type SignInData = {
   loginId: string;
   password: string;

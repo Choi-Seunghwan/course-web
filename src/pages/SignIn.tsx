@@ -30,7 +30,9 @@ export default function SignIn() {
   const [loginId, setLoginId] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSignInButton = async () => {
+  const handleSignInButton = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+
     try {
       await signIn({ loginId, password });
       navigate("/");
@@ -46,26 +48,32 @@ export default function SignIn() {
   return (
     <Container>
       <SignInWrap>
-        <Input
-          placeholder="아이디"
-          value={loginId}
-          onChange={(e) => setLoginId(e.target.value)}
-          style={{ color: "#000", width: "90%" }}
-        />
-        <Input
-          type="password"
-          placeholder="비밀번호"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          style={{ color: "#000", width: "90%" }}
-        />
-        <Button
-          onClick={handleSignInButton}
-          variant="text"
-          style={{ color: "#000", width: "90%" }}
+        <form
+          onSubmit={handleSignInButton}
+          style={{ textAlign: "center", width: "100%" }}
         >
-          로그인
-        </Button>
+          <Input
+            placeholder="아이디"
+            value={loginId}
+            onChange={(e) => setLoginId(e.target.value)}
+            style={{ color: "#000", width: "90%", marginBottom: "10px" }}
+          />
+          <Input
+            type="password"
+            placeholder="비밀번호"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            style={{ color: "#000", width: "90%", marginBottom: "10px" }}
+          />
+          <Button
+            type="submit"
+            variant="text"
+            style={{ color: "#000", width: "90%", marginBottom: "10px" }}
+          >
+            로그인
+          </Button>
+        </form>
+
         <Button
           onClick={handleSignUpButton}
           variant="text"

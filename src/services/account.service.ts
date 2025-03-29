@@ -3,6 +3,7 @@ import PortOne, { IdentityVerificationResponse } from "@portone/browser-sdk/v2";
 import { nanoid } from "nanoid";
 import {
   AccountModel,
+  checkDuplicateVerificationDto,
   SignInData,
   SignInResponse,
   SignUpDto,
@@ -22,6 +23,14 @@ setUpInterceptors(apiInstance);
 export const signUp = async (data: SignUpDto) => {
   return await apiInstance
     .post("/account/sign-up", data)
+    .then((res) => res.data);
+};
+
+export const checkDuplicateVerification = async (
+  data: checkDuplicateVerificationDto
+): Promise<boolean> => {
+  return await apiInstance
+    .post("/account/check-duplicate-ci", data)
     .then((res) => res.data);
 };
 
@@ -47,15 +56,11 @@ export const getMe = async (): Promise<AccountModel> => {
 
 export const portoneIdentityVerification =
   async (): Promise<IdentityVerificationResponse> => {
-    console.log("본인인증을 시작합니다.");
-
     const result = await PortOne.requestIdentityVerification({
       storeId: `${process.env.REACT_APP_PORTONE_STORE_ID}`,
       identityVerificationId: `identity-verification-${nanoid()}`,
       channelKey: `${process.env.REACT_APP_PORTONE_INICIS_CHANNEL_KEY}`,
     });
-
-    console.log("본인인증 결과:", result);
 
     if (!result) {
       throw new Error("본인인증 에러");

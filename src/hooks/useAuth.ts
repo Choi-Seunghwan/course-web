@@ -5,6 +5,7 @@ import {
   signIn as signInApi,
   signUp as signUpApi,
   signOut as signOutApi,
+  checkDuplicateVerification as checkDuplicateVerificationApi,
 } from "../services/account.service";
 import { useAuthContext } from "../context/AuthContext";
 import { IdentityVerificationResponse } from "@portone/browser-sdk/v2";
@@ -33,9 +34,20 @@ export const useAuth = () => {
     }
   };
 
+  const checkDuplicateVerification = async (identityVerificationId: string) => {
+    try {
+      const isDuplicated = await checkDuplicateVerificationApi({
+        identityVerificationId,
+      });
+      return isDuplicated;
+    } catch (err: any) {
+      throw err;
+    }
+  };
+
   const signUp = async (signUpData: SignUpData) => {
     if (!verificationData) {
-      throw new Error("본인인증을 먼저 수행하세요.");
+      throw new Error("need identity verification");
     }
 
     try {
@@ -73,5 +85,6 @@ export const useAuth = () => {
     signUp,
     signIn,
     signOut,
+    checkDuplicateVerification,
   };
 };
