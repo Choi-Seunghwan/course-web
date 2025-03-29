@@ -48,13 +48,32 @@ const CopyRight = styled.p`
 `;
 
 export default function AppBottom() {
+  const linkButtonClickHandler = (
+    e: React.MouseEvent<HTMLParagraphElement>
+  ) => {
+    const target = e.currentTarget.innerText;
+    switch (target) {
+      case "About":
+        window.open("https://github.com/Choi-Seunghwan", "_blank");
+        break;
+      case "Contact":
+        window.open("https://github.com/Choi-Seunghwan", "_blank");
+        break;
+      case "Blog":
+        window.open("https://github.com/Choi-Seunghwan", "_blank");
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <AppBottomContainer>
       <Divider style={{ width: "50%", margin: "20px 0 0 0" }} />
       <LinkWrap>
-        <LinkText>About</LinkText>
-        <LinkText>Contact</LinkText>
-        <LinkText>Blog</LinkText>
+        <LinkText onClick={linkButtonClickHandler}>About</LinkText>
+        <LinkText onClick={linkButtonClickHandler}>Contact</LinkText>
+        <LinkText onClick={linkButtonClickHandler}>Blog</LinkText>
       </LinkWrap>
       <CopyrightWrap>
         <CopyRight>Copyright© Rights Reserved.</CopyRight>
