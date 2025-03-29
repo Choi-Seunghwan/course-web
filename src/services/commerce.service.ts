@@ -53,6 +53,10 @@ export const removeFromCart = async (cartId: number) => {
   return await apiInstance.delete(`/cart/${cartId}`).then((res) => res.data);
 };
 
+export const getOrders = async () => {
+  return await apiInstance.get("/order").then((res) => res.data);
+};
+
 export const order = async (data: OrderData): Promise<OrderResponse> => {
   return await apiInstance.post("/order", data).then((res) => res.data);
 };

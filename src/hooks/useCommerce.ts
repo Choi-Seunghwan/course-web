@@ -9,6 +9,7 @@ import {
   requestPayment,
   order as orderApi,
   completePayment,
+  getOrders as getOrdersApi,
 } from "../services/commerce.service";
 import { PagingQuery } from "../types/api.type";
 import { OrderData } from "../types/commerce.type";
@@ -103,6 +104,15 @@ export const useCommerce = () => {
     await completePayment(data.paymentKey);
   };
 
+  const getOrders = async () => {
+    try {
+      const result = await getOrdersApi();
+      return result;
+    } catch (e) {
+      throw e;
+    }
+  };
+
   return {
     getProducts,
     getProductDetail,
@@ -112,5 +122,6 @@ export const useCommerce = () => {
     removeFromCart,
     order,
     pay,
+    getOrders,
   };
 };
