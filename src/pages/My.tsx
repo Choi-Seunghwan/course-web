@@ -8,6 +8,7 @@ import { useCommerce } from "../hooks/useCommerce";
 import { OrderModel } from "../types/commerce-model.type";
 import OrderHistoryCardList from "../components/card/OrderHistoryCardList";
 import { useNavigate } from "react-router-dom";
+import strings from "../strings/string";
 
 const Container = styled.div`
   position: relative;
@@ -77,13 +78,16 @@ export default function My() {
       </TitleWrap>
       <ContentWrap>
         <div style={{ marginBottom: "20px" }}>
-          <SecondaryTitle style={{ marginTop: "0px" }} title="회원정보" />
+          <SecondaryTitle
+            style={{ marginTop: "0px" }}
+            title={strings.ko.ACCOUNT_INFO}
+          />
           <p>ID: {account?.loginId}</p>
           <p>EMAIL: {account?.email}</p>
           <Divider />
         </div>
         <div>
-          <SecondaryTitle title="주문내역" />
+          <SecondaryTitle title={strings.ko.ORDER_HISTORY} />
           <div
             style={{
               display: "flex",
@@ -92,12 +96,24 @@ export default function My() {
               gap: "14px",
             }}
           >
-            {orders.map((order) => (
-              <OrderHistoryCardList
-                key={order.orderNo}
-                items={[order]}
-              ></OrderHistoryCardList>
-            ))}
+            {orders.length === 0 ? (
+              <p
+                style={{
+                  textAlign: "center",
+                  fontSize: "16px",
+                  marginTop: "40px",
+                }}
+              >
+                {strings.ko.NO_ORDER_HISTORY}
+              </p>
+            ) : (
+              orders.map((order) => (
+                <OrderHistoryCardList
+                  key={order.orderNo}
+                  items={[order]}
+                ></OrderHistoryCardList>
+              ))
+            )}
           </div>
         </div>
       </ContentWrap>

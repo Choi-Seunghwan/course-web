@@ -10,6 +10,7 @@ import { formatKrw } from "../utils/format";
 import strings from "../strings/string";
 import { useOrderContext } from "../context/OrderContext";
 import { useNavigate } from "react-router-dom";
+import { useAuthContext } from "../context/AuthContext";
 
 const Container = styled.div`
   position: relative;
@@ -66,12 +67,22 @@ const TotalText = styled.div`
 export default function Cart() {
   const { cart } = useCartContext();
   const { setOrderItems } = useOrderContext();
+  const { isAuthenticated } = useAuthContext();
 
   const { getCartItems, updateCartQuantity, removeFromCart } = useCommerce();
 
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!isAuthenticated) {
+      alert(strings.ko.NEED_SIGN_IN);
+
+      setTimeout(() => {
+        navigate("/sign-in");
+      }, 100);
+      return;
+    }
+
     getCartItems().then();
   }, []);
 

@@ -27,6 +27,13 @@ function authReducer(state: any, action: any) {
         account: null,
         accessToken: null,
       };
+    case "SIGN_OUT":
+      return {
+        ...state,
+        isAuthenticated: false,
+        account: null,
+        accessToken: null,
+      };
     default:
       return state;
   }

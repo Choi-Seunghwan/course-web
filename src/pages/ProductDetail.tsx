@@ -12,6 +12,7 @@ import FullWidthButton from "../components/button/FullWidthButton";
 import strings from "../strings/string";
 import { useOrderContext } from "../context/OrderContext";
 import { ProductModel } from "../types/commerce-model.type";
+import { useAuthContext } from "../context/AuthContext";
 
 const ProductDetailWrap = styled.div`
   display: flex;
@@ -76,6 +77,7 @@ export default function ProductDetail() {
     new URLSearchParams(location.search).get("productId")
   );
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuthContext();
 
   const { getProductDetail, getProducts, addToCart } = useCommerce();
   const { setOrderItems } = useOrderContext();
@@ -98,10 +100,15 @@ export default function ProductDetail() {
     );
   }, [productId]);
 
-  const handleAddToCartButtonClick = () => {
-    addToCart(productId, 1).then(() => {
-      alert(strings["ko"].ADD_TO_CART);
-    });
+  const handleAddToCartButtonClick = async () => {
+    if (!isAuthenticated) {
+      alert(strings.ko.NEED_SIGN_IN);
+      navigate("/sign-in");
+      return;
+    }
+
+    await addToCart(productId, 1);
+    alert(strings["ko"].ADD_TO_CART);
   };
 
   const handleBuyButtonClick = (product: ProductModel) => {

@@ -4,6 +4,7 @@ import {
   portoneIdentityVerification,
   signIn as signInApi,
   signUp as signUpApi,
+  signOut as signOutApi,
 } from "../services/account.service";
 import { useAuthContext } from "../context/AuthContext";
 import { IdentityVerificationResponse } from "@portone/browser-sdk/v2";
@@ -59,7 +60,8 @@ export const useAuth = () => {
     }
   };
 
-  const signOut = () => {
+  const signOut = async () => {
+    await signOutApi();
     authContextSignOut();
   };
 

@@ -9,6 +9,7 @@ import HorizontalProductCardList from "../components/card/HorizontalProductCardL
 import { OrderProductData } from "../types/commerce.type";
 import { useCommerce } from "../hooks/useCommerce";
 import { getOrderSummaryText } from "../utils/get-order-summary-text";
+import { useCartContext } from "../context/CartContext";
 
 const Container = styled.div`
   position: relative;
@@ -83,7 +84,8 @@ const TotalText = styled.div`
 
 export default function Checkout() {
   const { orderItems, clearOrder } = useOrderContext();
-  const { order, pay } = useCommerce();
+  const { order, pay, getCartItems } = useCommerce();
+  const { cart } = useCartContext();
 
   const navigate = useNavigate();
 
@@ -109,6 +111,8 @@ export default function Checkout() {
       paymentKey,
       totalAmount: totalPrice,
     });
+
+    if (cart.length > 0) await getCartItems();
 
     alert("결제가 완료되었습니다.");
     navigate("/my");

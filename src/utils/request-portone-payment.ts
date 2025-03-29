@@ -1,4 +1,5 @@
 import PortOne from "@portone/browser-sdk/v2";
+import strings from "../strings/string";
 
 export type PortOnePaymentRequestData = {
   paymentId: string;
@@ -18,8 +19,10 @@ export const requestPortOnePayment = async (
     ...data,
   });
 
-  // if (res?.code === )
+  if (res?.code) {
+    alert(strings.ko.PORTONE_PAYMENT_FAIL);
+    throw new Error(res?.message);
+  }
 
-  console.log("@@", res);
   return res;
 };

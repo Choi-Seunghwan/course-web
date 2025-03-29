@@ -57,7 +57,9 @@ export default function OrderHistoryCard({
         </Info>
         <Info>
           {strings.ko.ORDER_TOTAL}
-          <InfoText>{formatKrw(order.totalPrice)}</InfoText>
+          <InfoText style={{ fontSize: 15, fontWeight: 700, color: "#d9534f" }}>
+            {formatKrw(order.totalPrice)}
+          </InfoText>
         </Info>
       </div>
 

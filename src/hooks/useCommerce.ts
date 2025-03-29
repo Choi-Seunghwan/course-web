@@ -55,6 +55,9 @@ export const useCommerce = () => {
   const addToCart = async (productId: number, quantity: number) => {
     try {
       const result = await addToCartApi(productId, quantity);
+
+      await getCartItems();
+
       return result;
     } catch (e) {
       throw e;

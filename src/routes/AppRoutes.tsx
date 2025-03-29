@@ -15,7 +15,7 @@ const AppRoutes = () => {
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Main />} />
-        <Route path="/signIn" element={<SignIn />} />
+        <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/product-detail" element={<ProductDetail />}></Route>
         <Route path="/cart" element={<Cart />}></Route>

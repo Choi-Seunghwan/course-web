@@ -3,6 +3,7 @@ import { useAuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import cartIcon from "../../assets/icon/cart.png";
 import profileIcon from "../../assets/icon/profile.png";
+import { useCartContext } from "../../context/CartContext";
 
 const AppHeaderContainer = styled.div`
   display: flex;
@@ -45,8 +46,40 @@ const Icon = styled.img`
   cursor: pointer;
 `;
 
+const CartCount = styled.span`
+  position: absolute;
+  right: -5px;
+  bottom: 0px;
+  background-color: #d9534f;
+  color: #fff;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  opacity: 0.9;
+  pointer-events: none;
+`;
+
+const CartIconWrap = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+`;
+
 export default function AppHeader() {
-  const { isAuthenticated, account } = useAuthContext();
+  const { isAuthenticated } = useAuthContext();
+  const { cart } = useCartContext();
   const navigate = useNavigate();
 
   const handleLogoClick = () => {
@@ -63,7 +96,7 @@ export default function AppHeader() {
         <Icon style={{}} src={profileIcon} onClick={() => navigate("/my")} />
       );
     } else {
-      return <AuthText onClick={() => navigate("/signin")}>LOGIN</AuthText>;
+      return <AuthText onClick={() => navigate("/sign-in")}>LOGIN</AuthText>;
     }
   };
 
@@ -93,11 +126,14 @@ export default function AppHeader() {
           justifyContent: "right",
         }}
       >
-        <Icon
-          style={{ marginLeft: "20px" }}
-          src={cartIcon}
-          onClick={handleCartClick}
-        />
+        <CartIconWrap>
+          <Icon
+            style={{ marginLeft: "20px" }}
+            src={cartIcon}
+            onClick={handleCartClick}
+          />
+          {cart.length > 0 && <CartCount>{cart.length}</CartCount>}
+        </CartIconWrap>
       </div>
     </AppHeaderContainer>
   );
