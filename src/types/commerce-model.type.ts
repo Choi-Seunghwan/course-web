@@ -1,3 +1,5 @@
+import { OrderStatus } from "./commerce.type";
+
 export type ProductModel = {
   id: number;
   name: string;
@@ -37,7 +39,7 @@ export type OrderModel = {
   id: number;
   orderNo: string;
   totalPrice: number;
-  status: string;
+  status: OrderStatus;
   createdAt: Date;
   orderItems: OrderItemModel[];
 };

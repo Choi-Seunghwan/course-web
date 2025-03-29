@@ -31,3 +31,5 @@ export type OrderResponse = {
 };
 
 export type GetOrdersResponse = OrderModel[];
+
+export type OrderStatus = "PENDING" | "READY" | "COMPLETED" | "CANCELED";

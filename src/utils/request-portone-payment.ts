@@ -13,7 +13,7 @@ export const requestPortOnePayment = async (
 ) => {
   const res = await PortOne.requestPayment({
     storeId: `${process.env.REACT_APP_PORTONE_STORE_ID}`,
-    channelKey: `${process.env.REACT_APP_PORTONE_CHANNEL_KEY}`,
+    channelKey: `${process.env.REACT_APP_PORTONE_TOSS_PAYMENT_CHANNEL_KEY}`,
     currency: "CURRENCY_KRW",
     ...data,
   });

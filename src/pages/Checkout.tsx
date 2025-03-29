@@ -135,14 +135,14 @@ export default function Checkout() {
           </p>
           <Divider />
         </AddressWrap>
-        <PaymentMethodWrap>
+        {/* <PaymentMethodWrap>
           <p
             style={{ fontSize: "16px", fontWeight: "700", marginBottom: "4px" }}
           >
             결제수단
           </p>
           <Divider />
-        </PaymentMethodWrap>
+        </PaymentMethodWrap> */}
         <CardListWrap>
           <HorizontalProductCardList
             items={orderItems}

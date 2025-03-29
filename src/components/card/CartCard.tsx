@@ -29,12 +29,6 @@ const NameText = styled.div`
   margin-bottom: 4px;
 `;
 
-const DescText = styled.div`
-  font-size: 12px;
-  color: #555;
-  margin-bottom: 8px;
-`;
-
 const PriceText = styled.div`
   font-size: 12px;
   font-weight: 700;
