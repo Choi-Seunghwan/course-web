@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { useAuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../hooks/useAuth";
 import cartIcon from "../../assets/icon/cart.png";
+import profileIcon from "../../assets/icon/profile.png";
 
 const AppHeaderContainer = styled.div`
   display: flex;
@@ -41,13 +41,12 @@ const AuthText = styled.p`
   cursor: pointer;
 `;
 
-const CartIcon = styled.img`
+const Icon = styled.img`
   cursor: pointer;
 `;
 
 export default function AppHeader() {
   const { isAuthenticated, account } = useAuthContext();
-  const { logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogoClick = () => {
@@ -60,7 +59,9 @@ export default function AppHeader() {
 
   const renderAuth = () => {
     if (isAuthenticated) {
-      return <AuthText onClick={logout}>LOGOUT</AuthText>;
+      return (
+        <Icon style={{}} src={profileIcon} onClick={() => navigate("/my")} />
+      );
     } else {
       return <AuthText onClick={() => navigate("/signin")}>LOGIN</AuthText>;
     }
@@ -84,10 +85,16 @@ export default function AppHeader() {
           Fashion
         </Logo>
       </LogoWrap>
-      <div style={{ display: "flex", alignItems: "center", width: "120px" }}>
-        <AuthText style={{ marginRight: "10px" }}>{account?.loginId}</AuthText>
-        <CartIcon
-          style={{ marginLeft: "auto" }}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          width: "120px",
+          justifyContent: "right",
+        }}
+      >
+        <Icon
+          style={{ marginLeft: "20px" }}
           src={cartIcon}
           onClick={handleCartClick}
         />
