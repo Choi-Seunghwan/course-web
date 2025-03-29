@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useCommerce } from "../hooks/useCommerce";
 import { OrderModel } from "../types/commerce-model.type";
 import OrderHistoryCardList from "../components/card/OrderHistoryCardList";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   position: relative;
@@ -44,6 +45,7 @@ const BottomWrap = styled.div`
 const SignOutButton = styled.p`
   font-size: 15px;
   text-decoration: underline;
+  cursor: pointer;
 `;
 
 export default function My() {
@@ -51,6 +53,13 @@ export default function My() {
   const { signOut } = useAuth();
   const { getOrders } = useCommerce();
   const [orders, setOrders] = useState<OrderModel[]>([]);
+
+  const navigate = useNavigate();
+
+  const signOutButtonHandler = async () => {
+    await signOut();
+    navigate("/");
+  };
 
   useEffect(() => {
     getOrders().then((res) => {
@@ -72,16 +81,25 @@ export default function My() {
         </div>
         <div>
           <SecondaryTitle title="주문내역" />
-          {orders.map((order) => (
-            <OrderHistoryCardList
-              key={order.orderNo}
-              items={[order]}
-            ></OrderHistoryCardList>
-          ))}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              flexDirection: "column",
+              gap: "14px",
+            }}
+          >
+            {orders.map((order) => (
+              <OrderHistoryCardList
+                key={order.orderNo}
+                items={[order]}
+              ></OrderHistoryCardList>
+            ))}
+          </div>
         </div>
       </ContentWrap>
       <BottomWrap>
-        <SignOutButton onClick={signOut}>로그아웃</SignOutButton>
+        <SignOutButton onClick={signOutButtonHandler}>로그아웃</SignOutButton>
       </BottomWrap>
     </Container>
   );

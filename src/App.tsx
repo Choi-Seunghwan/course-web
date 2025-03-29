@@ -10,7 +10,7 @@ const AppContainer = styled.div`
   min-height: 100%;
   height: 100%;
   background-color: #f3f4f6;
-  overflow: visible;
+  overflow: auto;
 `;
 
 const MobileMode = styled.div`

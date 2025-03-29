@@ -83,7 +83,7 @@ export default function ProductDetail() {
   const [relatedProducts, setRelatedProducts] = useState<ProductModel[]>([]);
 
   const handleCardClick = (id: number) => {
-    scrollTop();
+    // scrollTop();
     navigate(`/product-detail?productId=${id}`);
   };
 

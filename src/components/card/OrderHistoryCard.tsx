@@ -16,11 +16,21 @@ const Container = styled.div`
   width: 100%;
 `;
 
-const InfoText = styled.p`
+const Info = styled.p`
   margin: 0;
   font-size: 14px;
   font-weight: 700;
   color: #333;
+  margin-bottom: 8px;
+`;
+
+const InfoText = styled.span`
+  margin: 0;
+  font-size: 13px;
+  font-weight: 400;
+  color: #333;
+  margin-left: 10px;
+  margin-top: 4px;
   margin-bottom: 8px;
 `;
 
@@ -34,21 +44,21 @@ export default function OrderHistoryCard({
   return (
     <Container>
       <div>
-        <InfoText>
-          {strings.ko.ORDER_NO} {order.orderNo}
-        </InfoText>
-        <InfoText>
-          {strings.ko.ORDER_DATE} {formatFullDateTime(order.createdAt)}
-        </InfoText>
-        <InfoText>
-          {strings.ko.ORDER_STATUS} {order.status}
-        </InfoText>
-        <InfoText>
-          {strings.ko.ORDER_STATUS} {formatOrderStatus(order.status)}
-        </InfoText>
-        <InfoText>
-          {strings.ko.ORDER_TOTAL} {formatKrw(order.totalPrice)}
-        </InfoText>
+        <Info>
+          {strings.ko.ORDER_NO} <InfoText>{order.orderNo}</InfoText>
+        </Info>
+        <Info>
+          {strings.ko.ORDER_DATE}
+          <InfoText> {formatFullDateTime(order.createdAt)}</InfoText>
+        </Info>
+        <Info>
+          {strings.ko.ORDER_STATUS}
+          <InfoText>{formatOrderStatus(order.status)}</InfoText>
+        </Info>
+        <Info>
+          {strings.ko.ORDER_TOTAL}
+          <InfoText>{formatKrw(order.totalPrice)}</InfoText>
+        </Info>
       </div>
 
       <HorizontalProductCardList
