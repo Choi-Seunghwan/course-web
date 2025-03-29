@@ -2,8 +2,8 @@ import { useState } from "react";
 
 import {
   portoneIdentityVerification,
-  postSignIn,
-  postSignUp,
+  signIn as signInApi,
+  signUp as signUpApi,
 } from "../services/account.service";
 import { useAuthContext } from "../context/AuthContext";
 import { IdentityVerificationResponse } from "@portone/browser-sdk/v2";
@@ -15,7 +15,7 @@ export const useAuth = () => {
     account,
     setAccessToken,
     setAccount,
-    logout: authContextLogout,
+    signOut: authContextSignOut,
   } = useAuthContext();
   const [verificationData, setVerificationData] =
     useState<IdentityVerificationResponse | null>(null);
@@ -38,7 +38,7 @@ export const useAuth = () => {
     }
 
     try {
-      const response = await postSignUp({
+      const response = await signUpApi({
         ...signUpData,
         identityVerificationId: verificationData.identityVerificationId,
       });
@@ -51,7 +51,7 @@ export const useAuth = () => {
 
   const signIn = async (signInData: SignInData) => {
     try {
-      const resData = await postSignIn(signInData);
+      const resData = await signInApi(signInData);
       setAccessToken(resData.accessToken);
       setAccount(resData.account);
     } catch (err: any) {
@@ -59,8 +59,8 @@ export const useAuth = () => {
     }
   };
 
-  const logout = () => {
-    authContextLogout();
+  const signOut = () => {
+    authContextSignOut();
   };
 
   return {
@@ -70,6 +70,6 @@ export const useAuth = () => {
     identityVerification,
     signUp,
     signIn,
-    logout,
+    signOut,
   };
 };

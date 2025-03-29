@@ -19,16 +19,20 @@ export const apiInstance = axios.create({
 
 setUpInterceptors(apiInstance);
 
-export const postSignUp = async (data: SignUpDto) => {
+export const signUp = async (data: SignUpDto) => {
   return await apiInstance
     .post("/account/sign-up", data)
     .then((res) => res.data);
 };
 
-export const postSignIn = async (data: SignInData): Promise<SignInResponse> => {
+export const signIn = async (data: SignInData): Promise<SignInResponse> => {
   return await apiInstance
     .post("/account/sign-in", data)
     .then((res) => res.data);
+};
+
+export const signOut = async () => {
+  return await apiInstance.post("/account/sign-out").then((res) => res.data);
 };
 
 export const getMe = async (): Promise<AccountModel> => {
@@ -48,7 +52,7 @@ export const portoneIdentityVerification =
     const result = await PortOne.requestIdentityVerification({
       storeId: `${process.env.REACT_APP_PORTONE_STORE_ID}`,
       identityVerificationId: `identity-verification-${nanoid()}`,
-      channelKey: `${process.env.REACT_APP_PORTONE_CHANNEL_KEY}`,
+      channelKey: `${process.env.REACT_APP_PORTONE_INICIS_CHANNEL_KEY}`,
     });
 
     console.log("본인인증 결과:", result);

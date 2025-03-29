@@ -38,7 +38,7 @@ type AuthContextType = {
   accessToken: string | null;
   account: AccountModel | null;
   setAccount: (account: AccountModel) => void;
-  logout: () => void;
+  signOut: () => void;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -50,7 +50,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     dispatch({ type: "SET_ACCOUNT", payload: account });
   const setAccessToken = (accessToken: string) =>
     dispatch({ type: "SET_ACCESS_TOKEN", payload: accessToken });
-  const logout = () => dispatch({ type: "LOGOUT" });
+  const signOut = () => {
+    localStorage.removeItem("accessToken");
+    dispatch({ type: "SIGN_OUT" });
+  };
 
   /** Load User */
   useEffect(() => {
@@ -63,7 +66,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
           dispatch({ type: "SET_ACCOUNT", payload: account });
         } catch (err) {
-          logout();
+          signOut();
         }
       }
     };
@@ -73,7 +76,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <AuthContext.Provider
-      value={{ ...state, setAccount, logout, setAccessToken }}
+      value={{ ...state, setAccount, signOut, setAccessToken }}
     >
       {children}
     </AuthContext.Provider>
