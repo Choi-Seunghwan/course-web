@@ -1,5 +1,7 @@
 import styled from "styled-components";
-import mainBannerImage from "../../assets/main.webp";
+import mainBannerImage1 from "../../assets/main-banner-1.png";
+import mainBannerImage2 from "../../assets/main-banner-2.png";
+import mainBannerImage3 from "../../assets/main-banner-3.png";
 import Carousel from "react-material-ui-carousel";
 import { Paper } from "@mui/material";
 
@@ -34,15 +36,15 @@ const Slogan = styled.p`
 export default function MainBanner() {
   const items = [
     {
-      image: mainBannerImage,
+      image: mainBannerImage1,
       slogan: "LUXURY",
     },
     {
-      image: mainBannerImage,
+      image: mainBannerImage2,
       slogan: "FASHION",
     },
     {
-      image: mainBannerImage,
+      image: mainBannerImage3,
       slogan: "ACCESSORIES",
     },
   ];
@@ -58,7 +60,7 @@ export default function MainBanner() {
       >
         {items.map((item) => (
           <Paper sx={{ boxShadow: "none" }} key={item.slogan}>
-            <MainBannerImage src={mainBannerImage}></MainBannerImage>
+            <MainBannerImage src={item.image}></MainBannerImage>
             <SloganWrap>
               <Slogan className="bodoni-moda">{item.slogan}</Slogan>
             </SloganWrap>
