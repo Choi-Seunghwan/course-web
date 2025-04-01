@@ -4,6 +4,8 @@ import AppHeader from "./components/layouts/AppHeader";
 import AppProviders from "./providers/AppProviders";
 import AppContent from "./components/layouts/AppContent";
 import AppBottom from "./components/layouts/AppBottom";
+import { ThemeProvider } from "@mui/material";
+import theme from "./components/layouts/Theme";
 
 const AppContainer = styled.div`
   position: relative;
@@ -24,15 +26,17 @@ const MobileMode = styled.div`
 function App() {
   return (
     <AppProviders>
-      <AppContainer id="app-container">
-        <MobileMode>
-          <AppHeader />
-          <AppContent>
-            <AppRoutes />
-          </AppContent>
-          <AppBottom />
-        </MobileMode>
-      </AppContainer>
+      <ThemeProvider theme={theme}>
+        <AppContainer id="app-container">
+          <MobileMode>
+            <AppHeader />
+            <AppContent>
+              <AppRoutes />
+            </AppContent>
+            <AppBottom />
+          </MobileMode>
+        </AppContainer>
+      </ThemeProvider>
     </AppProviders>
   );
 }

@@ -138,7 +138,14 @@ export default function ProductDetail() {
         </Carousel> */}
 
         <ImageWrap>
-          <img src={tempDetailImage}></img>
+          <img
+            src={product?.images?.[0] || tempDetailImage}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+            }}
+          ></img>
         </ImageWrap>
         <div style={{ display: "flex", flexDirection: "column" }}>
           <NameText>{product?.name}</NameText>

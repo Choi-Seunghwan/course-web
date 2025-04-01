@@ -37,7 +37,15 @@ export default function ProductCard(props: ProductCardProps) {
 
   return (
     <Container onClick={handleClick}>
-      <img src={props.images?.[0] || tempImage}></img>
+      <img
+        src={props.images?.[0] || tempImage}
+        style={{
+          width: `${props.width || 170}px`,
+          height: `${props.height || 200}px`,
+          objectFit: "cover",
+          borderRadius: "8px",
+        }}
+      ></img>
       <div
         style={{
           display: "flex",

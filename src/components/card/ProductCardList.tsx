@@ -22,7 +22,7 @@ export default function ProductCardList(props: {
                 key={index}
                 {...item}
                 width={165}
-                height={200}
+                height={220}
                 onClick={() => props.onCardClick(item.id)}
               ></ProductCard>
             );
